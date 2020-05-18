@@ -16,6 +16,10 @@ public class CommonVo {
         this.data = data;
     }
 
+    public CommonVo(Boolean success) {
+        this.success = success;
+    }
+
     public CommonVo(Boolean success, Object data, String errorMessage) {
         this.success = success;
         this.data = data;

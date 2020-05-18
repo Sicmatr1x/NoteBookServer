@@ -9,9 +9,9 @@ public enum ArticleSource {
     /**
      * 知乎回答
      */
-    ZHIHU_HUIDA,
+    ZHIHU_ANSWER,
     /**
-     * 知乎文章
+     * 知乎专栏
      */
-    ZHIHU_WENZHANG;
+    ZHIHU_ZHUANLAN;
 }
