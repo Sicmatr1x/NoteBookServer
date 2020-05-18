@@ -1,0 +1,20 @@
+spring:
+  profiles:
+    active: dev
+
+---
+server:
+  port: 8090
+spring:
+  profiles: dev
+constant:
+  version: 1.0.0.20200518
+
+
+---
+server:
+  port: 8090
+spring:
+  profiles: prd
+constant:
+  version: 1.0.0.20200518
