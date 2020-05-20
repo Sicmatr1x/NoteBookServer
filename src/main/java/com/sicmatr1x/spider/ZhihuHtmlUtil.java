@@ -3,9 +3,9 @@ package com.sicmatr1x.spider;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import com.sicmatr1x.spider.util.HeadTitleTranslator;
-import com.sicmatr1x.spider.util.ImgDownloader;
-import com.sicmatr1x.spider.util.ZhihuImgTranslator;
+import com.sicmatr1x.spider.translator.HeadTitleTranslator;
+import com.sicmatr1x.spider.translator.ImgDownloader;
+import com.sicmatr1x.spider.translator.ZhihuImgTranslator;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -31,24 +31,34 @@ public class ZhihuHtmlUtil extends HtmlUtil {
 
   /**
    * 获取img dom
-   * @param element
+   * @param element 包含回答内容的DOM
    * @return
    */
   public Element translateImgDom(Element element) {
+    // 移除之后回答DOM下多余的noscript DOM
     Elements noscriptNode = element.select("noscript");
     if(noscriptNode.size() == 0){
       return element;
     }
     noscriptNode.first().remove();
+    // 获取回答里面的img DOM
     Elements imgElements = element.select("img");
+    // 遍历img DOM
     ZhihuImgTranslator zhihuImgTranslator = new ZhihuImgTranslator();
     for(Element imgElement : imgElements){
+      // 转换img DOM的src从互联网URL为本地URL
       imgElement = zhihuImgTranslator.translate(imgElement);
+      // 下载img
       this.downloadImg(imgElement);
     }
     return element;
   }
 
+  /**
+   * 下载img DOM中的图片到本地 文章title + _files文件夹下
+   * @param element img DOM元素
+   * @return
+   */
   private Element downloadImg(Element element){
     ImgDownloader imgDownloader = new ImgDownloader();
     return imgDownloader.translate(element, this.title + "_files");

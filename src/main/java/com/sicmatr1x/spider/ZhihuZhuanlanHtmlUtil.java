@@ -2,9 +2,9 @@ package com.sicmatr1x.spider;
 
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import com.sicmatr1x.spider.util.HeadTitleTranslator;
-import com.sicmatr1x.spider.util.ImgDownloader;
-import com.sicmatr1x.spider.util.ZhihuImgTranslator;
+import com.sicmatr1x.spider.translator.HeadTitleTranslator;
+import com.sicmatr1x.spider.translator.ImgDownloader;
+import com.sicmatr1x.spider.translator.ZhihuImgTranslator;
 
 public class ZhihuZhuanlanHtmlUtil extends HtmlUtil{
 

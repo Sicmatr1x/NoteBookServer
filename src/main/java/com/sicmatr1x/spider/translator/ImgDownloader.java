@@ -1,4 +1,4 @@
-package com.sicmatr1x.spider.util;
+package com.sicmatr1x.spider.translator;
 
 import org.jsoup.nodes.Element;
 
