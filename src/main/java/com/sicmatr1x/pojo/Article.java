@@ -1,5 +1,9 @@
 package com.sicmatr1x.pojo;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+
 import java.io.Serializable;
 import java.util.Arrays;
 
@@ -7,22 +11,31 @@ import java.util.Arrays;
  * 文章实体类
  * @author sicmatr1x
  */
+@Document(collection = "article")
 public class Article implements Serializable {
-    private String uuid;
+    @Id
+    private String id;
+    @Field("url")
     private String url;
+    @Field("source")
     private ArticleSource source;
+    @Field("title")
     private String title;
+    @Field("body")
     private String body;
+    @Field("markdown")
     private String markdown;
+    @Field("tags")
     private String[] tags;
+    @Field("category")
     private String category;
 
-    public String getUuid() {
-        return uuid;
+    public String getId() {
+        return id;
     }
 
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getUrl() {
@@ -84,7 +97,7 @@ public class Article implements Serializable {
     @Override
     public String toString() {
         return "Article{" +
-                "uuid='" + uuid + '\'' +
+                "uuid='" + id + '\'' +
                 ", url='" + url + '\'' +
                 ", source=" + source +
                 ", title='" + title + '\'' +

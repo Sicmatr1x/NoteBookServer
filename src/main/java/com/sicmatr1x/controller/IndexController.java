@@ -9,10 +9,7 @@ import com.sicmatr1x.vo.CommonVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -49,21 +46,35 @@ public class IndexController {
    */
   @RequestMapping("/zhihu/question/{questionId}/answer/{answerId}")
   public CommonVo spiderZhihuAnswer(@PathVariable String questionId, @PathVariable String answerId) {
-    CommonVo response = null;
+    CommonVo response = new CommonVo(false);
     Article article = new Article();
     article.setUrl(ZhihuHtmlUtil.DOMAIN + "question/" + questionId + "/answer/" + answerId);
     article.setSource(ArticleSource.ZHIHU_ANSWER);
     Article resultArticle = null;
     try {
       resultArticle = spiderService.spiderZhihuAnswer(article);
-      response = new CommonVo(true, resultArticle);
+      response.setSuccess(true);
+      response.setData(resultArticle);
     } catch (IOException e) {
       e.printStackTrace();
-      response = new CommonVo(false);
       response.setErrorMessage(e.getMessage());
-    } finally {
-      return response;
     }
+    return response;
+  }
+
+  /**
+   *
+   * @param url
+   * @return
+   */
+  @RequestMapping(value="/article",method= RequestMethod.GET)
+  public CommonVo findOneArticleById(@RequestParam String url) {
+    CommonVo response = new CommonVo(false);
+    Article article = null;
+    article = spiderService.findOneArticleByURL(url);
+    response.setSuccess(true);
+    response.setData(article);
+    return response;
   }
 
 }

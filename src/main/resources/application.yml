@@ -7,6 +7,14 @@ server:
   port: 8090
 spring:
   profiles: dev
+  data:
+    mongodb:
+#      uri: mongodb://NoteBookServer_appln:Friday5@localhost:27017/NoteBookServer
+      host: 127.0.0.1
+      port: 27017
+      database: NoteBookServer
+      username: NoteBookServer_appln
+      password: Friday5
 constant:
   version: 1.0.0.20200518
 

@@ -38,7 +38,7 @@ public class CommonVo {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(Object data) {
         this.data = data;
     }
 
