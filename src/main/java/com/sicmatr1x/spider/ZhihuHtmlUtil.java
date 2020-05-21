@@ -1,11 +1,9 @@
 package com.sicmatr1x.spider;
 
+import com.sicmatr1x.spider.translator.*;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import com.sicmatr1x.spider.translator.HeadTitleTranslator;
-import com.sicmatr1x.spider.translator.ImgDownloader;
-import com.sicmatr1x.spider.translator.ZhihuImgTranslator;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -44,7 +42,8 @@ public class ZhihuHtmlUtil extends HtmlUtil {
     // 获取回答里面的img DOM
     Elements imgElements = element.select("img");
     // 遍历img DOM
-    ZhihuImgTranslator zhihuImgTranslator = new ZhihuImgTranslator();
+    Translator zhihuImgTranslator = new ZhihuImgTranslator();
+    Translator img2Base64Translator = new Img2Base64Translator();
     for(Element imgElement : imgElements){
       // 转换img DOM的src从互联网URL为本地URL
       imgElement = zhihuImgTranslator.translate(imgElement);
@@ -136,7 +135,8 @@ public class ZhihuHtmlUtil extends HtmlUtil {
     if ("question".equals(mode)) {
       if (this.address.contains("answer")) {
         Element answerElement = this.getOneAnswer(); // 单个回答链接
-        answerElement = this.translateImgDom(answerElement);
+        Translator zhihuImgTranslator = new ZhihuImgTranslator();
+        answerElement = zhihuImgTranslator.translate(answerElement);
         this.content = headTitleTranslator.translate(answerElement).html();
 
       } else {
