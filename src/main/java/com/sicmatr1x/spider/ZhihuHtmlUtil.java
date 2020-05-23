@@ -19,10 +19,10 @@ public class ZhihuHtmlUtil extends HtmlUtil {
   @Override
   void getHtml() throws IOException {
     Map<String, String> cookies = new HashMap<>();
-    cookies.put("MQTT::auth", "{\"username\":\"zhihu_web/c3eba22b84626619308c435efce4eba0\",\"password\":\"1551688934/9c50faaa4884b954a9f5020c10bef1535edc930b\"}");
-    cookies.put("lastuser", "\"2499055595@qq.com\"");
-    cookies.put("lastuser:email", "2499055595@qq.com");
-    cookies.put("privacy-records", "{\"undefined\":1548381571678}");
+//    cookies.put("MQTT::auth", "{\"username\":\"zhihu_web/c3eba22b84626619308c435efce4eba0\",\"password\":\"1551688934/9c50faaa4884b954a9f5020c10bef1535edc930b\"}");
+//    cookies.put("lastuser", "\"2499055595@qq.com\"");
+//    cookies.put("lastuser:email", "2499055595@qq.com");
+//    cookies.put("privacy-records", "{\"undefined\":1548381571678}");
     cookies.put("zap:storage:local", "{\"canUseDataViewPayload\":true,\"lastUA\":\"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.119 Safari/537.36\"}");
     this.doc = Jsoup.connect(this.address).cookies(cookies).get();
   }
