@@ -3,7 +3,7 @@ package com.sicmatr1x.spider.translator;
 import org.jsoup.nodes.Attribute;
 import org.jsoup.nodes.Attributes;
 import org.jsoup.nodes.Element;
-import sun.misc.BASE64Encoder;
+import org.apache.commons.codec.binary.Base64;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -27,9 +27,51 @@ public class Img2Base64Translator implements Translator {
             }
         }
         imgElement.attr("alt", srcAddress);
-        String base64 = imageToBase64ByOnline(srcAddress);
-        imgElement.attr("src", "data:image/png;base64," + base64);
+        String base64 = imageToBase64(srcAddress);
+        String imgType = getFileType(srcAddress);
+        imgElement.attr("src", "data:image/" + imgType + ";base64," + base64);
         return imgElement;
+    }
+
+    private String getFileType(String srcAddress) {
+        String[] work = srcAddress.split("\\.");
+        if (work.length > 0) {
+            return work[work.length-1];
+        } else {
+            return "png";
+        }
+    }
+
+    /**
+     * 在线图片转换成base64字符串
+     * https://segmentfault.com/q/1010000009065824
+     * @param imgURL 图片线上路径
+     * @return
+     */
+    public static String imageToBase64(String imgURL) {
+        ByteArrayOutputStream data = new ByteArrayOutputStream();
+        try {
+            // 创建URL
+            URL url = new URL(imgURL);
+            byte[] by = new byte[1024];
+            // 创建链接
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.setConnectTimeout(5 * 1000);
+            InputStream is = conn.getInputStream();
+            // 将内容读取内存中
+            int len = -1;
+            while ((len = is.read(by)) != -1) {
+                data.write(by, 0, len);
+            }
+            // 关闭流
+            is.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // 对字节数组Base64编码
+        Base64 encoder = new Base64();
+        return encoder.encodeToString(data.toByteArray());
     }
 
     /**
@@ -39,7 +81,7 @@ public class Img2Base64Translator implements Translator {
      * @return
      */
     public static String imageToBase64ByOnline(String imgURL) {
-        if (imgURL != null && imgURL.length() > 0) {
+        if (imgURL == null || "".equals(imgURL) ) {
             return null;
         }
 
@@ -71,8 +113,8 @@ public class Img2Base64Translator implements Translator {
             }
 
             // 对字节数组Base64编码
-            BASE64Encoder encoder = new BASE64Encoder();
-            return encoder.encode(dataByte);
+            Base64 encoder = new Base64();
+            return encoder.encodeToString(dataByte);
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

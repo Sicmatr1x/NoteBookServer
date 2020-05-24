@@ -68,13 +68,10 @@ public class IndexController {
    * @return
    */
   @RequestMapping(value="/article",method= RequestMethod.GET)
-  public CommonVo findOneArticleById(@RequestParam String url) {
-    CommonVo response = new CommonVo(false);
+  public String findOneArticleById(@RequestParam String url) {
     Article article = null;
     article = spiderService.findOneArticleByURL(url);
-    response.setSuccess(true);
-    response.setData(article);
-    return response;
+    return article.getBody();
   }
 
 }

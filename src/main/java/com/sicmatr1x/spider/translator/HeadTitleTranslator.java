@@ -29,7 +29,7 @@ public class HeadTitleTranslator implements Translator {
         Element head = new Element("head");
         Element title = new Element("title");
         title.text(this.titleText);
-        head.appendChild(title);
+        title.appendTo(head);
 
         // 笔记信息
         Element noteTitle = new Element("h1");
@@ -39,13 +39,13 @@ public class HeadTitleTranslator implements Translator {
         fromLink.attr("href", this.fromAddress);
 
         Element body = new Element("body");
-        body.appendChild(noteTitle);
-        body.appendChild(fromLink);
-        body.appendChild(element);
+        noteTitle.appendTo(body);
+        fromLink.appendTo(body);
+        element.appendTo(body);
 
         Element html = new Element("html");
-        html.appendChild(head);
-        html.appendChild(body);
+        head.appendTo(html);
+        body.appendTo(html);
         return html;
     }
 }

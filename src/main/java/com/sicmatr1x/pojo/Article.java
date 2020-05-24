@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Date;
 
 /**
  * 文章实体类
@@ -15,6 +16,8 @@ import java.util.Arrays;
 public class Article implements Serializable {
     @Id
     private String id;
+    @Field("createdTime")
+    private Date createdTime;
     @Field("url")
     private String url;
     @Field("source")
@@ -36,6 +39,14 @@ public class Article implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public Date getCreatedTime() {
+        return createdTime;
+    }
+
+    public void setCreatedTime(Date createdTime) {
+        this.createdTime = createdTime;
     }
 
     public String getUrl() {
@@ -97,7 +108,8 @@ public class Article implements Serializable {
     @Override
     public String toString() {
         return "Article{" +
-                "uuid='" + id + '\'' +
+                "id='" + id + '\'' +
+                ", createdTime=" + createdTime +
                 ", url='" + url + '\'' +
                 ", source=" + source +
                 ", title='" + title + '\'' +
