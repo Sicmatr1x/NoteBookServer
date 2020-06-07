@@ -85,6 +85,28 @@ public class IndexController {
         return response;
     }
 
+    /**
+     * 添加知乎回答
+     * @return is add job success
+     */
+    @RequestMapping(value="/add/zhihu/p", method = RequestMethod.POST)
+    public CommonVo spiderZhihuZhuanLan(@RequestParam String url) {
+        CommonVo response = new CommonVo(false);
+        Article article = new Article();
+        article.setUrl(url);
+        article.setSource(ArticleSource.ZHIHU_ZHUANLAN);
+        Article resultArticle = null;
+        try {
+            resultArticle = spiderService.spiderZhihuZhuanLan(article);
+            response.setSuccess(true);
+            response.setData(resultArticle);
+        } catch (IOException e) {
+            e.printStackTrace();
+            response.setErrorMessage(e.getMessage());
+        }
+        return response;
+    }
+
   /**
    * 根据URL查找article
    * @param url

@@ -1,11 +1,14 @@
 package com.sicmatr1x.spider;
 
+import com.sicmatr1x.spider.translator.Translator;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import com.sicmatr1x.spider.translator.HeadTitleTranslator;
 import com.sicmatr1x.spider.translator.ImgDownloader;
 import com.sicmatr1x.spider.translator.ZhihuImgTranslator;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ZhihuZhuanlanHtmlUtil extends HtmlUtil{
 
   public static final String DOMAIN = "https://zhuanlan.zhihu.com/";
@@ -68,7 +71,8 @@ public class ZhihuZhuanlanHtmlUtil extends HtmlUtil{
 
     if ("p".equals(mode)) {
       Element answerElement = this.getArticle(); // 单个回答链接
-      answerElement = this.translateImgDom(answerElement);
+      Translator zhihuImgTranslator = new ZhihuImgTranslator();
+      answerElement = zhihuImgTranslator.translate(answerElement);
       this.content = headTitleTranslator.translate(answerElement).html();
     } else { // 文章链接
       System.out.println("ZhihuZhuanlanHtmlUtil not support for:" + this.address);
