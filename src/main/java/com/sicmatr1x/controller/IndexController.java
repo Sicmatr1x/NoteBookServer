@@ -6,9 +6,8 @@ import com.sicmatr1x.pojo.ArticleSource;
 import com.sicmatr1x.service.SpiderService;
 import com.sicmatr1x.spider.ZhihuHtmlUtil;
 import com.sicmatr1x.vo.CommonVo;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -28,8 +27,10 @@ public class IndexController {
   @Autowired
   private SpiderService spiderService;
 
+  private ObjectMapper objectMapper = new ObjectMapper();
+
   /**
-   *
+   * 检查版本号
    * @return application version
    */
   @RequestMapping("/version")
@@ -41,7 +42,7 @@ public class IndexController {
   }
 
   /**
-   *
+   * 添加知乎回答
    * @return is add job success
    */
   @RequestMapping("/zhihu/question/{questionId}/answer/{answerId}")
@@ -62,16 +63,44 @@ public class IndexController {
     return response;
   }
 
+    /**
+     * 添加知乎回答
+     * @return is add job success
+     */
+    @RequestMapping(value="/add/zhihu/answer", method = RequestMethod.POST)
+    public CommonVo spiderZhihuAnswer2(@RequestParam String url) {
+        CommonVo response = new CommonVo(false);
+        Article article = new Article();
+        article.setUrl(url);
+        article.setSource(ArticleSource.ZHIHU_ANSWER);
+        Article resultArticle = null;
+        try {
+            resultArticle = spiderService.spiderZhihuAnswer(article);
+            response.setSuccess(true);
+            response.setData(resultArticle);
+        } catch (IOException e) {
+            e.printStackTrace();
+            response.setErrorMessage(e.getMessage());
+        }
+        return response;
+    }
+
   /**
-   *
+   * 根据URL查找article
    * @param url
    * @return
    */
-  @RequestMapping(value="/article",method= RequestMethod.GET)
-  public String findOneArticleById(@RequestParam String url) {
+  @RequestMapping(value="/article",method = RequestMethod.GET)
+  public String findOneArticleById(@RequestParam String url) throws IOException {
     Article article = null;
     article = spiderService.findOneArticleByURL(url);
-    return article.getBody();
+    if (article == null) {
+        CommonVo response = new CommonVo(true);
+        response.setErrorMessage("Not found any result in DB");
+        return objectMapper.writeValueAsString(response);
+    } else {
+        return article.getBody();
+    }
   }
 
 }
