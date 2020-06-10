@@ -71,7 +71,8 @@ public class IndexController {
     public CommonVo spiderZhihuAnswer2(@RequestParam String url) {
         CommonVo response = new CommonVo(false);
         Article article = new Article();
-        article.setUrl(url);
+        String[] work = url.split("\\?");
+        article.setUrl(work[0]);
         article.setSource(ArticleSource.ZHIHU_ANSWER);
         Article resultArticle = null;
         try {
@@ -93,7 +94,8 @@ public class IndexController {
     public CommonVo spiderZhihuZhuanLan(@RequestParam String url) {
         CommonVo response = new CommonVo(false);
         Article article = new Article();
-        article.setUrl(url);
+        String[] work = url.split("\\?");
+        article.setUrl(work[0]);
         article.setSource(ArticleSource.ZHIHU_ZHUANLAN);
         Article resultArticle = null;
         try {
