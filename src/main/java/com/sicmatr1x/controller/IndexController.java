@@ -97,7 +97,7 @@ public class IndexController {
         String[] work = url.split("\\?");
         article.setUrl(work[0]);
         article.setSource(ArticleSource.ZHIHU_ZHUANLAN);
-        Article resultArticle = null;
+        Article resultArticle = null; 
         try {
             resultArticle = spiderService.spiderZhihuZhuanLan(article);
             response.setSuccess(true);
@@ -117,7 +117,8 @@ public class IndexController {
   @RequestMapping(value="/article",method = RequestMethod.GET)
   public String findOneArticleById(@RequestParam String url) throws IOException {
     Article article = null;
-    article = spiderService.findOneArticleByURL(url);
+    String[] work = url.split("\\?");
+    article = spiderService.findOneArticleByURL(work[0]);
     if (article == null) {
         CommonVo response = new CommonVo(true);
         response.setErrorMessage("Not found any result in DB");
