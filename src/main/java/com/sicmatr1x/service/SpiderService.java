@@ -4,6 +4,7 @@ import com.sicmatr1x.dao.ArticleDao;
 import com.sicmatr1x.pojo.Article;
 import com.sicmatr1x.spider.ZhihuHtmlUtil;
 import com.sicmatr1x.spider.ZhihuZhuanlanHtmlUtil;
+import org.bson.BsonSerializationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,7 +38,13 @@ public class SpiderService {
         article.setTitle(zhihuHtmlUtil.getTitle());
         article.setBody(zhihuHtmlUtil.getContent());
         article.setCreatedTime(new Date());
-        articleDao.saveArticle(article);
+        try {
+            articleDao.saveArticle(article);
+        } catch (BsonSerializationException exception) {
+            // TODO: remove img doms
+            return null;
+        }
+
         return article;
     }
 
