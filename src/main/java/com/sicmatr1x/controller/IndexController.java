@@ -55,6 +55,8 @@ public class IndexController {
     try {
       resultArticle = spiderService.spiderZhihuAnswer(article);
       response.setSuccess(true);
+      // 避免返回body过大
+      resultArticle.setBody(resultArticle.getBody().substring(0, 400) + "......");
       response.setData(resultArticle);
     } catch (IOException e) {
       e.printStackTrace();
@@ -78,6 +80,8 @@ public class IndexController {
         try {
             resultArticle = spiderService.spiderZhihuAnswer(article);
             response.setSuccess(true);
+            // 避免返回body过大
+            resultArticle.setBody(resultArticle.getBody().substring(0, 400) + "......");
             response.setData(resultArticle);
         } catch (IOException e) {
             e.printStackTrace();
@@ -101,6 +105,8 @@ public class IndexController {
         try {
             resultArticle = spiderService.spiderZhihuZhuanLan(article);
             response.setSuccess(true);
+            // 避免返回body过大
+            resultArticle.setBody(resultArticle.getBody().substring(0, 400) + "......");
             response.setData(resultArticle);
         } catch (IOException e) {
             e.printStackTrace();
