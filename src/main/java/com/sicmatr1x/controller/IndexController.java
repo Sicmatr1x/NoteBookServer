@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -136,6 +137,24 @@ public class IndexController {
             return objectMapper.writeValueAsString(response);
         } else {
             return article.getBody();
+        }
+    }
+
+    /**
+     * 返回最近创建的n个笔记
+     * @param number 正整数若为空则默认为3
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping(value = "/recently/articles", method = RequestMethod.GET)
+    public String findRecentlyArticles(@RequestParam(required = false) Integer number) throws IOException {
+        List<Article> list = spiderService.findRecentlyArticles(number);
+        if (list == null) {
+            CommonVo response = new CommonVo(true);
+            response.setErrorMessage("Not found any result in DB");
+            return objectMapper.writeValueAsString(response);
+        } else {
+            return list.toString();
         }
     }
 

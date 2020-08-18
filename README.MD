@@ -44,8 +44,14 @@ db.createUser({user:'NoteBookServer_appln',pwd:'Friday5',roles:[{role:'readWrite
 - get note by url
   - URL: /notebook/article
   - Method: GET
-  - body:
+  - params:
     - url: note url, like: https://www.zhihu.com/question/279255504/answer/1234844708
   - examples: http://localhost:8090/notebook/article?url=https://www.zhihu.com/question/279255504/answer/1234844708
   
+- find recently articles
+  - URL: /notebook/recently/articles
+  - Method: GET
+  - params:
+    - number: recently number notes, like: http://localhost:8090/notebook/recently/articles?number=2
+  - examples: http://localhost:8090/notebook/recently/articles?number=2
  

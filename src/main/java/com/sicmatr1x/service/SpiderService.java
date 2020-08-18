@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author sicmatr1x
@@ -66,5 +67,9 @@ public class SpiderService {
 
     public Article findOneArticleByURL(String url) {
         return articleDao.findOneArticleByURL(url);
+    }
+
+    public List<Article> findRecentlyArticles(Integer number) {
+        return articleDao.findRecentlyArticles(number);
     }
 }
