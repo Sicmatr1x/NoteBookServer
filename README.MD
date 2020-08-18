@@ -41,6 +41,13 @@ db.createUser({user:'NoteBookServer_appln',pwd:'Friday5',roles:[{role:'readWrite
     - url: zhihu answer url, like: https://zhuanlan.zhihu.com/p/136254608
   - examples: http://localhost:8090/notebook/add/zhihu/p
   
+- add huxiu article to notebook
+  - URL: /notebook/add/huxiu/article
+  - Method: POST
+  - body:
+    - url: zhihu answer url, like: https://www.huxiu.com/article/375386.html
+  - examples: http://localhost:8090/notebook/add/huxiu/article
+  
 - get note by url
   - URL: /notebook/article
   - Method: GET

@@ -121,6 +121,32 @@ public class IndexController {
     }
 
     /**
+     * 添加知乎回答
+     *
+     * @return is add job success
+     */
+    @RequestMapping(value = "/add/huxiu/article", method = RequestMethod.POST)
+    public CommonVo spiderHuxiu(@RequestParam String url) {
+        CommonVo response = new CommonVo(false);
+        Article article = new Article();
+        String[] work = url.split("\\?");
+        article.setUrl(work[0]);
+        article.setSource(ArticleSource.HUXIU);
+        Article resultArticle = null;
+        try {
+            resultArticle = spiderService.spiderHuxiu(article);
+            response.setSuccess(true);
+            // 避免返回body过大
+            resultArticle.setBody(resultArticle.getBody().substring(0, 400) + "......");
+            response.setData(resultArticle);
+        } catch (IOException e) {
+            e.printStackTrace();
+            response.setErrorMessage(e.getMessage());
+        }
+        return response;
+    }
+
+    /**
      * 根据URL查找article
      *
      * @param url

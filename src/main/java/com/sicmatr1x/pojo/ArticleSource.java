@@ -13,5 +13,9 @@ public enum ArticleSource {
     /**
      * 知乎专栏
      */
-    ZHIHU_ZHUANLAN;
+    ZHIHU_ZHUANLAN,
+    /**
+     * 虎嗅文章
+     */
+    HUXIU;
 }
