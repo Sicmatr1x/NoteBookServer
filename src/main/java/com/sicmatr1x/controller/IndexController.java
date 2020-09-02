@@ -180,7 +180,7 @@ public class IndexController {
             response.setErrorMessage("Not found any result in DB");
             return objectMapper.writeValueAsString(response);
         } else {
-            return list.toString();
+            return objectMapper.writeValueAsString(list);
         }
     }
 
